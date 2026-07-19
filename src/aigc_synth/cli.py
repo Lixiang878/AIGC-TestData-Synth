@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 from . import __version__
-from .diversity import analyze_diversity, dedupe
+from .diversity import analyze_diversity, dedupe, dedupe_similar
 from .filter import filter_samples
 from .generator import synthesize
 from .models import DataSpec, SyntheticSample
@@ -72,6 +72,16 @@ def cmd_filter(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_dedupe_similar(args: argparse.Namespace) -> int:
+    data = json.loads(Path(args.infile).read_text(encoding="utf-8"))
+    samples = [SyntheticSample.from_dict(d) for d in data]
+    unique, removed = dedupe_similar(samples, threshold=args.threshold)
+    print(f"[info] similarity dedup (threshold={args.threshold}) removed "
+          f"{len(removed)} near-duplicate(s); {len(unique)} kept")
+    _save(unique, args.out)
+    return 0
+
+
 def cmd_demo(args: argparse.Namespace) -> int:
     spec_path = Path(__file__).resolve().parents[2] / "examples" / "support_tickets.json"
     if not spec_path.exists():
@@ -127,6 +137,12 @@ def build_parser() -> argparse.ArgumentParser:
     demo = sub.add_parser("demo", help="offline end-to-end demo (mock provider)")
     demo.add_argument("--n", type=int, default=10, help="number of samples to synthesize")
     demo.set_defaults(func=cmd_demo)
+
+    ds = sub.add_parser("dedupe-similar", help="collapse near-duplicate samples by similarity")
+    ds.add_argument("infile")
+    ds.add_argument("--threshold", type=float, default=0.8, help="Jaccard threshold 0-1")
+    ds.add_argument("--out", "-o", required=True)
+    ds.set_defaults(func=cmd_dedupe_similar)
     return p
 
 

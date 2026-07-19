@@ -6,7 +6,7 @@ from pathlib import Path
 from aigc_synth.models import DataSpec, SyntheticSample
 from aigc_synth.provider import MockProvider, get_provider
 from aigc_synth.generator import synthesize, parse_llm_output
-from aigc_synth.diversity import analyze_diversity, dedupe
+from aigc_synth.diversity import analyze_diversity, dedupe, dedupe_similar
 from aigc_synth.filter import filter_samples, default_rules
 
 
@@ -65,6 +65,18 @@ def test_diversity_report_gaps():
     rep = analyze_diversity(samples, target_categories=["refund", "shipping", "account"])
     assert rep.gaps == ["shipping", "account"]
     assert rep.categories_present == 1
+
+
+def test_dedupe_similar_collapses_near_duplicates():
+    a = SyntheticSample.from_dict(
+        {"spec": "x", "data": {"category": "refund", "text": "I want a refund"}})
+    b = SyntheticSample.from_dict(
+        {"spec": "x", "data": {"category": "refund", "text": "I want a refund please"}})
+    c = SyntheticSample.from_dict(
+        {"spec": "x", "data": {"category": "shipping", "text": "where is my package"}})
+    unique, removed = dedupe_similar([a, b, c], threshold=0.3)
+    assert len(unique) == 2
+    assert len(removed) == 1
 
 
 def test_end_to_end_demo_offline():

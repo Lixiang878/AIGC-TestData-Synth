@@ -37,8 +37,11 @@ post-processing stages that matter for *testing* specifically:
   target language, and per-category targets.
 - **Pluggable providers**: offline `MockProvider` (deterministic, CI-friendly)
   and `OpenAIProvider` (OpenAI / Wenxin / Qwen / vLLM).
-- **Diversity**: de-dup + category coverage report with gap detection.
-- **Quality**: configurable rule chain; every rejection carries a reason.
+- **Diversity**: exact de-dup (canonical key) **+ similarity de-dup** (token
+  Jaccard) that collapses LLM near-duplicates which only differ in wording,
+  plus a category coverage report with gap detection and evenness.
+- **Quality**: configurable rule chain (required fields, length, language,
+  PII, relevance); every rejection carries a reason.
 - **Zero core deps**, offline test suite.
 
 ### Install
@@ -56,6 +59,37 @@ aigc-testdata-synth synth -s examples/support_tickets.json --provider mock \
     --dedup --filter -o samples.json
 aigc-testdata-synth diversity samples.json --categories refund,shipping,account,complaint
 ```
+
+Similarity de-duplication (collapse rephrased near-duplicates) is available in
+`synth` via `--similar 0.8` (0 disables, the default), or as a standalone pass:
+
+```bash
+aigc-testdata-synth dedupe-similar samples.json --threshold 0.8 -o samples.dedup.json
+```
+
+### Design notes (engineering judgment)
+
+- **Two-stage de-duplication.** Exact-hash removal catches byte-identical
+  repeats; the Jaccard pass catches the *semantic* repeats LLMs actually
+  produce ("I want a refund" vs "please refund my order"). The signature uses
+  `category + text tokens` only — not IDs or ordering — so genuinely distinct
+  inputs survive.
+- **Evenness over raw count.** A category set that is 90% one label is useless
+  for testing; the report quantifies balance (1 − normalised Gini spread) so
+  you can see *imbalance*, not just *totals*.
+- **Filter rejects, never silently drops.** Every removed sample keeps its
+  reason (`pii:email`, `missing_fields`, …), which is what lets a test author
+  trust the kept set.
+
+### Limitations
+
+- **Relevance is keyword-based**, not semantic. It guards against obviously
+  off-topic samples, not subtle off-target phrasing; an embedding or
+  LLM-as-judge stage would be the next upgrade.
+- **The quality rules are conservative examples.** Calibrate thresholds and add
+  domain rules for your own data.
+- **MockProvider is a deterministic fixture**, not a model — use a real provider
+  for production data.
 
 ### Example output
 
@@ -148,7 +182,7 @@ pytest -q
 
 - **规格驱动**：一份小 JSON 描述字段、类别、约束、目标语言与每类数量。
 - **可插拔提供者**：离线 `MockProvider` 与 `OpenAIProvider`（兼容 OpenAI / 文心 / 通义 / vLLM）。
-- **多样性**：去重 + 类别覆盖报告（缺口检测）。
+- **多样性**：精确去重（规范化指纹）**+ 相似度去重**（token Jaccard），合并"只是措辞不同"的近重复；类别覆盖报告含缺口检测与均衡度。
 - **质量**：可配置规则链，拒绝均带原因。
 - **核心零依赖**，离线测试套件。
 
@@ -176,6 +210,23 @@ pytest -q
 ```
 
 生成样本见 `examples/samples.json`，完整报告见 `results/diversity_report.txt`。
+
+### 设计决策（工程判断）
+
+- **两阶段去重**：精确哈希去除字节级重复；Jaccard 阶段捕获 LLM 真正产生的"语义重复"
+  （"I want a refund" 与 "please refund my order"）。签名只用 `类别 + 文本 token`，
+  不含 ID 与顺序，所以真正不同的输入得以保留。
+- **看重均衡而非总量**：某一类占 90% 的样本对测试毫无价值；报告量化均衡度
+  （1 − 归一化 Gini  spread），让你看到"失衡"而非仅"总数"。
+- **过滤是拒绝而非静默丢弃**：每个被移除样本都保留原因（`pii:email`、
+  `missing_fields` 等），测试作者才敢信任保留集。
+
+### 局限
+
+- **相关性为关键词级，非语义级**：它能挡住明显离题样本，挡不住细微偏题表述；下一步可上
+   embedding 或 LLM-as-Judge。
+- **质量规则是保守示例**：请针对你的数据校准阈值、补充领域规则。
+- **MockProvider 是确定性夹具而非模型**：生产数据请用真实提供者。
 
 ### 许可证
 
