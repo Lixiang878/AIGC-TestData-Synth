@@ -1,0 +1,9 @@
+{
+  "name": "support_tickets",
+  "instruction": "Generate customer support ticket texts for an e-commerce chatbot.",
+  "fields": ["text", "category", "language"],
+  "categories": ["refund", "shipping", "account", "complaint"],
+  "constraints": "Each text 1-3 sentences, realistic, no real PII (use fake names).",
+  "target_per_category": 5,
+  "language": "en"
+}

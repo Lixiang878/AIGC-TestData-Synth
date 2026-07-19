@@ -1,0 +1,12 @@
+{
+  "provider": "mock",
+  "model": "gpt-4o-mini",
+  "base_url": null,
+  "n": 10,
+  "temperature": 0.9,
+  "max_tokens": 2048,
+  "dedup": true,
+  "filter": true,
+  "min_len": 3,
+  "max_len": 2000
+}
