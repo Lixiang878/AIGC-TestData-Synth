@@ -1,0 +1,102 @@
+[
+  {
+    "id": "0f1cc35e4c3a",
+    "spec": "support_tickets",
+    "data": {
+      "text": "[refund] sample 1 for support_tickets.",
+      "category": "refund",
+      "language": "en"
+    },
+    "provider": "mock"
+  },
+  {
+    "id": "02c05c4ccf4c",
+    "spec": "support_tickets",
+    "data": {
+      "text": "[refund] sample 2 for support_tickets.",
+      "category": "refund",
+      "language": "en"
+    },
+    "provider": "mock"
+  },
+  {
+    "id": "49d96a74d93a",
+    "spec": "support_tickets",
+    "data": {
+      "text": "[refund] sample 3 for support_tickets.",
+      "category": "refund",
+      "language": "en"
+    },
+    "provider": "mock"
+  },
+  {
+    "id": "81711ed21658",
+    "spec": "support_tickets",
+    "data": {
+      "text": "[shipping] sample 1 for support_tickets.",
+      "category": "shipping",
+      "language": "en"
+    },
+    "provider": "mock"
+  },
+  {
+    "id": "10d018007faf",
+    "spec": "support_tickets",
+    "data": {
+      "text": "[shipping] sample 2 for support_tickets.",
+      "category": "shipping",
+      "language": "en"
+    },
+    "provider": "mock"
+  },
+  {
+    "id": "2e1302b48c4b",
+    "spec": "support_tickets",
+    "data": {
+      "text": "[shipping] sample 3 for support_tickets.",
+      "category": "shipping",
+      "language": "en"
+    },
+    "provider": "mock"
+  },
+  {
+    "id": "c02a8c09ceb9",
+    "spec": "support_tickets",
+    "data": {
+      "text": "[account] sample 1 for support_tickets.",
+      "category": "account",
+      "language": "en"
+    },
+    "provider": "mock"
+  },
+  {
+    "id": "fe3c5b955c02",
+    "spec": "support_tickets",
+    "data": {
+      "text": "[account] sample 2 for support_tickets.",
+      "category": "account",
+      "language": "en"
+    },
+    "provider": "mock"
+  },
+  {
+    "id": "91a85075c0ba",
+    "spec": "support_tickets",
+    "data": {
+      "text": "[account] sample 3 for support_tickets.",
+      "category": "account",
+      "language": "en"
+    },
+    "provider": "mock"
+  },
+  {
+    "id": "bef778ffd3c9",
+    "spec": "support_tickets",
+    "data": {
+      "text": "[complaint] sample 1 for support_tickets.",
+      "category": "complaint",
+      "language": "en"
+    },
+    "provider": "mock"
+  }
+]

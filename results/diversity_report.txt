@@ -1,0 +1,16 @@
+==================================================
+  AIGC Test Data Synthesis — Diversity Report
+==================================================
+  Total samples        : 10
+  Unique samples       : 10
+  Duplicates removed   : 0
+  Categories present   : 4 / 4
+  Gaps                 : none
+  Evenness             : 0.8500
+--------------------------------------------------
+  Per category:
+    account      : 3
+    complaint    : 1
+    refund       : 3
+    shipping     : 3
+==================================================

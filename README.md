@@ -57,6 +57,33 @@ aigc-testdata-synth synth -s examples/support_tickets.json --provider mock \
 aigc-testdata-synth diversity samples.json --categories refund,shipping,account,complaint
 ```
 
+### Example output
+
+`aigc-testdata-synth demo` (or the equivalent synth command with `--dedup --filter`)
+produces 10 unique samples with zero duplicates:
+
+```text
+==================================================
+  AIGC Test Data Synthesis — Diversity Report
+==================================================
+  Total samples        : 10
+  Unique samples       : 10
+  Duplicates removed   : 0
+  Categories present   : 4 / 4
+  Gaps                 : none
+  Evenness             : 0.8500
+--------------------------------------------------
+  Per category:
+    account      : 3
+    complaint    : 1
+    refund       : 3
+    shipping     : 3
+==================================================
+```
+
+The generated samples are in `examples/samples.json`, and the full report is in
+`results/diversity_report.txt`.
+
 ### With a real LLM
 
 ```bash
@@ -124,6 +151,31 @@ pytest -q
 - **多样性**：去重 + 类别覆盖报告（缺口检测）。
 - **质量**：可配置规则链，拒绝均带原因。
 - **核心零依赖**，离线测试套件。
+
+### 示例输出
+
+`aigc-testdata-synth demo`（或带 `--dedup --filter` 的 synth 命令）生成 10 条唯一样本，无重复：
+
+```text
+==================================================
+  AIGC Test Data Synthesis — Diversity Report
+==================================================
+  Total samples        : 10
+  Unique samples       : 10
+  Duplicates removed   : 0
+  Categories present   : 4 / 4
+  Gaps                 : none
+  Evenness             : 0.8500
+--------------------------------------------------
+  Per category:
+    account      : 3
+    complaint    : 1
+    refund       : 3
+    shipping     : 3
+==================================================
+```
+
+生成样本见 `examples/samples.json`，完整报告见 `results/diversity_report.txt`。
 
 ### 许可证
 

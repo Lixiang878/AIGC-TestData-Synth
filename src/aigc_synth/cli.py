@@ -125,7 +125,7 @@ def build_parser() -> argparse.ArgumentParser:
     f.set_defaults(func=cmd_filter)
 
     demo = sub.add_parser("demo", help="offline end-to-end demo (mock provider)")
-    demo.add_argument("--n", type=int, default=12, help="number of samples to synthesize")
+    demo.add_argument("--n", type=int, default=10, help="number of samples to synthesize")
     demo.set_defaults(func=cmd_demo)
     return p
 

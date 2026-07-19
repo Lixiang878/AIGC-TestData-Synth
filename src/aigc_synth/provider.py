@@ -92,11 +92,18 @@ class MockProvider(BaseProvider):
                     else:
                         item[f] = f"{cat}_{i}"
                 samples.append(item)
-        # a couple of generic ones
+        # a couple of generic (uncategorized) ones
         for i in range(self.samples_per_category):
-            item = {f: (f"generic_{i}" if f not in ("text",) else f"generic sample {i + 1}") for f in fields}
-            if "category" in fields and "general" not in cats:
-                item["category"] = "general"
+            item = {}
+            for f in fields:
+                if f in ("category", "type", "label", "class"):
+                    item[f] = "general"
+                elif f in ("language", "lang"):
+                    item[f] = spec.language or "en"
+                elif f == "text":
+                    item[f] = f"generic sample {i + 1}"
+                else:
+                    item[f] = f"generic_{i}"
             samples.append(item)
         return json.dumps({"samples": samples}, ensure_ascii=False, indent=2)
 

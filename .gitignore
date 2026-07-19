@@ -27,4 +27,6 @@ env/
 
 # Generated artifacts
 samples*.json
-results/
+!examples/samples.json
+results/*
+!results/diversity_report.txt
