@@ -5,8 +5,8 @@ Thanks for improving `aigc-testdata-synth`.
 ## Development setup
 
 ```bash
-git clone https://github.com/Lixiang878/aigc-testdata-synth.git
-cd aigc-testdata-synth
+git clone https://github.com/Lixiang878/AIGC-TestData-Synth.git
+cd AIGC-TestData-Synth
 pip install -e ".[dev]"
 pytest -q
 ```

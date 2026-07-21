@@ -39,9 +39,9 @@ dev = ["pytest>=7.0", "ruff>=0.4"]
 aigc-testdata-synth = "aigc_synth.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/Lixiang878/aigc-testdata-synth"
-Repository = "https://github.com/Lixiang878/aigc-testdata-synth"
-Issues = "https://github.com/Lixiang878/aigc-testdata-synth/issues"
+Homepage = "https://github.com/Lixiang878/AIGC-TestData-Synth"
+Repository = "https://github.com/Lixiang878/AIGC-TestData-Synth"
+Issues = "https://github.com/Lixiang878/AIGC-TestData-Synth/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]

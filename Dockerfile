@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM python:3.11-slim
 
-LABEL org.opencontainers.image.source="https://github.com/Lixiang878/aigc-testdata-synth"
+LABEL org.opencontainers.image.source="https://github.com/Lixiang878/AIGC-TestData-Synth"
 LABEL org.opencontainers.image.description="AIGC test-data factory: spec-driven synthesis, dedup, diversity audit, quality filter"
 
 WORKDIR /app
