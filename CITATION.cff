@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "AIGC-TestData-Synth: Spec-Driven Test Data Synthesis Factory"
+authors:
+  - family-names: Li
+    given-names: Xiang
+type: software
+version: 1.0.0
+date-released: "2026-07-22"
+license: MIT
+repository-code: "https://github.com/Lixiang878/AIGC-TestData-Synth"
+keywords:
+  - aigc
+  - test-data
+  - synthesis
+  - diversity
+abstract: "AIGC test-data factory: spec-driven synthesis, dedup, diversity audit (1-Gini), quality filter with reasons. Core depends only on Python standard library."
