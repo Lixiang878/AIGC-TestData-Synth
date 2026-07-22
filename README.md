@@ -18,6 +18,7 @@ category diversity → filter by quality.
   <img src="https://img.shields.io/badge/python-3.9%2B-blue.svg" alt="Python">
   <img src="https://img.shields.io/badge/dependencies-zero%20core%20(stdlib)-brightgreen.svg" alt="Zero core deps">
   <img src="https://img.shields.io/badge/license-MIT-yellow.svg" alt="License">
+  <img src="https://github.com/Lixiang878/AIGC-TestData-Synth/actions/workflows/ci.yml/badge.svg" alt="CI">
 </p>
 
 <a id="english"></a>
