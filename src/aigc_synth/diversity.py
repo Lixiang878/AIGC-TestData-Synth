@@ -100,6 +100,26 @@ class DiversityReport:
         }
 
 
+def _gini(vals: list[float]) -> float:
+    """Gini coefficient of a list of non-negative counts.
+
+    0.0 means perfectly equal distribution, 1.0 means maximal inequality.
+    Computed via the mean-absolute-difference form
+    ``sum_{i,j} |x_i - x_j| / (2 * n^2 * mean)`` which is stable for small n.
+    """
+    n = len(vals)
+    if n == 0:
+        return 0.0
+    total = sum(vals)
+    if total == 0:
+        return 0.0
+    s = 0.0
+    for i in range(n):
+        for j in range(n):
+            s += abs(vals[i] - vals[j])
+    return s / (2.0 * n * n * total)
+
+
 def analyze_diversity(
     samples: Iterable[SyntheticSample],
     *,  # noqa: D401
@@ -113,18 +133,14 @@ def analyze_diversity(
         counts[cat] += 1
     cats = target_categories or sorted(counts)
     gaps = [c for c in cats if counts.get(c, 0) == 0]
-    # Evenness: 1 - normalized Gini-like spread over target categories.
+    # Evenness: 1 - Gini coefficient over the target-category counts.
+    # (Reported as 0.0 when there is nothing to distribute.)
     if cats:
         vals = [counts.get(c, 0) for c in cats]
         total = sum(vals)
-        if total > 0:
-            mean = total / len(vals)
-            spread = sum(abs(v - mean) for v in vals) / (2 * total)
-            evenness = 1.0 - spread
-        else:
-            evenness = 0.0
+        evenness = 1.0 - _gini(vals) if total > 0 else 0.0
     else:
-        evenness = 1.0
+        evenness = 0.0
     return DiversityReport(
         total=len(samples),
         unique=len(samples),

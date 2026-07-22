@@ -32,7 +32,7 @@ classifiers = [
 dependencies = []
 
 [project.optional-dependencies]
-openai = ["openai>=1.0"]
+openai = ["openai>=1.0", "requests>=2.28"]
 dev = ["pytest>=7.0", "ruff>=0.4"]
 
 [project.scripts]

@@ -45,7 +45,7 @@ def cmd_synth(args: argparse.Namespace) -> int:
     if args.filter:
         result = filter_samples(samples, spec, min_len=args.min_len, max_len=args.max_len)
         print(
-            f"[info] filter kept {result.kept} / rejected {result.rejected} "
+            f"[info] filter kept {len(result.kept)} / rejected {len(result.rejected)} "
             f"(reasons: {result.to_dict()['reasons']})"
         )
         samples = result.kept

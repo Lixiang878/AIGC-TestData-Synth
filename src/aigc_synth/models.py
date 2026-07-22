@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from dataclasses import dataclass, field, asdict
 from typing import Any
 
@@ -67,7 +68,7 @@ class SyntheticSample:
         return cls(
             id=_id,
             spec=spec,
-            data=data,
+            data=_norm(data),  # store normalized copy (valid JSON, NaN -> None)
             provider=d.get("provider", "unknown"),
             raw=d.get("raw", ""),
         )
@@ -89,5 +90,10 @@ def _norm(v: Any) -> Any:
     if isinstance(v, list):
         return [_norm(x) for x in v]
     if isinstance(v, float):
+        # JSON cannot round-trip NaN/Inf; normalize them to None so that two
+        # distinct NaN samples do not collapse to the same canonical id, and so
+        # the fingerprint is always valid JSON.
+        if math.isnan(v) or math.isinf(v):
+            return None
         return round(v, 9)
     return v

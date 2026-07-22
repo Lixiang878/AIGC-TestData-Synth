@@ -8,8 +8,9 @@ WORKDIR /app
 
 COPY . /app
 
-# Offline core install: numpy only. The LLM synthesis backend is OPTIONAL and
-# lazy-imported; a template/mock backend runs with no network.
+# Offline core install: zero core dependencies (Python stdlib only). The LLM
+# synthesis backend is OPTIONAL and lazy-imported; a template/mock backend runs
+# with no network.
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install --no-cache-dir -e . \
     && pip install --no-cache-dir pytest
